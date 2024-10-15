@@ -1,5 +1,6 @@
-import { createTRPCClient, httpBatchLink, loggerLink } from "@trpc/client";
 import type { AppRouter } from "@examples/minimal-trpc";
+import { createTRPCClient, httpBatchLink, loggerLink } from "@trpc/client";
+import { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 
 export const api = createTRPCClient<AppRouter>({
   links: [
@@ -15,3 +16,6 @@ export const api = createTRPCClient<AppRouter>({
     }),
   ],
 });
+
+export type RouterInputs = inferRouterInputs<AppRouter>;
+export type RouterOutputs = inferRouterOutputs<AppRouter>;
