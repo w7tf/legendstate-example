@@ -8,31 +8,6 @@ importers:
 
   .: {}
 
-  api:
-    dependencies:
-      '@libsql/client':
-        specifier: ^0.14.0
-        version: 0.14.0
-      '@trpc/server':
-        specifier: 11.0.0-rc.571
-        version: 11.0.0-rc.571
-      drizzle-orm:
-        specifier: ^0.34.1
-        version: 0.34.1(@libsql/client@0.14.0)(@types/react@18.2.79)(react@18.2.0)
-      zod:
-        specifier: ^3.0.0
-        version: 3.23.8
-    devDependencies:
-      '@types/node':
-        specifier: ^20.10.0
-        version: 20.16.11
-      drizzle-kit:
-        specifier: ^0.25.0
-        version: 0.25.0
-      tsx:
-        specifier: ^4.0.0
-        version: 4.19.1
-
   mobile:
     dependencies:
       '@dev-plugins/async-storage':
@@ -113,7 +88,7 @@ importers:
         version: 7.25.8
       '@examples/minimal-trpc':
         specifier: workspace:*
-        version: link:../api
+        version: link:../server
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.13
@@ -135,6 +110,31 @@ importers:
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
+
+  server:
+    dependencies:
+      '@libsql/client':
+        specifier: ^0.14.0
+        version: 0.14.0
+      '@trpc/server':
+        specifier: 11.0.0-rc.571
+        version: 11.0.0-rc.571
+      drizzle-orm:
+        specifier: ^0.34.1
+        version: 0.34.1(@libsql/client@0.14.0)(@types/react@18.2.79)(react@18.2.0)
+      zod:
+        specifier: ^3.0.0
+        version: 3.23.8
+    devDependencies:
+      '@types/node':
+        specifier: ^20.10.0
+        version: 20.16.11
+      drizzle-kit:
+        specifier: ^0.25.0
+        version: 0.25.0
+      tsx:
+        specifier: ^4.0.0
+        version: 4.19.1
 
 packages:
 
