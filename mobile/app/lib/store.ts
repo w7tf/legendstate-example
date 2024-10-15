@@ -18,13 +18,11 @@ const synced = configureSynced(syncedCrud, {
 });
 
 export const store$ = observable({
-  ping: {
-    data: synced({
-      as: "value",
-      get: async () => await api.ping.query(),
-      persist: {
-        name: "ping",
-      },
-    }),
-  },
+  ping: synced({
+    as: "value",
+    get: async () => await api.ping.query(),
+    persist: {
+      name: "ping",
+    },
+  }),
 });

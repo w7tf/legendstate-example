@@ -1,12 +1,11 @@
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { StyleSheet } from "react-native";
-import { api } from "../lib/trpc";
 import { observer } from "@legendapp/state/react";
+import { StyleSheet } from "react-native";
 import { store$ } from "../lib/store";
 
 function TabThreeScreen() {
-  const res = store$.ping.data.get();
+  const res = store$.ping.get();
 
   console.log(res);
 
