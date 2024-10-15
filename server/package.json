@@ -5,7 +5,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsx watch .",
-    "studio": "drizzle-kit studio"
+    "studio": "drizzle-kit studio",
+    "seed": "drizzle-kit push && tsx db/seed.ts"
   },
   "dependencies": {
     "@libsql/client": "^0.14.0",
