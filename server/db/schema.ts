@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
+import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const posts = sqliteTable("posts", {
   id: integer("id").primaryKey(),
@@ -10,9 +10,9 @@ export const posts = sqliteTable("posts", {
     .notNull()
     .default(sql`(CURRENT_TIMESTAMP)`)
     .$onUpdate(() => sql`(CURRENT_TIMESTAMP)`),
-  createdAt: integer("created_at", { mode: "timestamp" }).default(
-    sql`(CURRENT_TIMESTAMP)`
-  ),
+  createdAt: integer("created_at")
+    .notNull()
+    .default(sql`(CURRENT_TIMESTAMP)`),
 });
 
 export const comments = sqliteTable("comments", {
@@ -26,7 +26,7 @@ export const comments = sqliteTable("comments", {
     .notNull()
     .default(sql`(CURRENT_TIMESTAMP)`)
     .$onUpdate(() => sql`(CURRENT_TIMESTAMP)`),
-  createdAt: integer("created_at", { mode: "timestamp" }).default(
-    sql`(CURRENT_TIMESTAMP)`
-  ),
+  createdAt: integer("created_at")
+    .notNull()
+    .default(sql`(CURRENT_TIMESTAMP)`),
 });
