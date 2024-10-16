@@ -1,11 +1,14 @@
 import { createHTTPServer } from "@trpc/server/adapters/standalone";
-import { z } from "zod";
+import { commentsRouter } from "./routes/comments";
+import { postRouter } from "./routes/posts";
 import { publicProcedure, router } from "./trpc";
 
 const appRouter = router({
   ping: publicProcedure.query(async () => {
     return "PONG";
   }),
+  posts: postRouter,
+  comments: commentsRouter,
 });
 
 // Export type router type signature,

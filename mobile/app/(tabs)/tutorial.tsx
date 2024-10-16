@@ -1,17 +1,27 @@
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { observer } from "@legendapp/state/react";
-import { StyleSheet } from "react-native";
+import { For, observer } from "@legendapp/state/react";
+import { StyleSheet, Button } from "react-native";
 import { store$ } from "../lib/store";
+import { Link } from "expo-router";
 
 function TabThreeScreen() {
-  const res = store$.ping.get();
-
-  console.log(res);
+  const posts = store$.posts;
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedText>Tab</ThemedText>
+      <For each={posts}>
+        {(post) => (
+          <Link href={`/posts/${post.id.get().toString()}`}>
+            <ThemedText key={post.id.get().toString()}>
+              {post.title.get()}
+            </ThemedText>
+          </Link>
+        )}
+      </For>
+      <Link href={"/posts/create"} asChild>
+        <Button title="Create new post" />
+      </Link>
     </ThemedView>
   );
 }
