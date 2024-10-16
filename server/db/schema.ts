@@ -2,7 +2,7 @@ import { sql } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const posts = sqliteTable("posts", {
-  id: integer("id").primaryKey(),
+  id: text("id").primaryKey(),
   title: text("title").notNull(),
   content: text("content").notNull(),
   author: text("author").notNull(),
@@ -16,7 +16,7 @@ export const posts = sqliteTable("posts", {
 });
 
 export const comments = sqliteTable("comments", {
-  id: integer("id").primaryKey(),
+  id: text("id").primaryKey(),
   postId: integer("post_id")
     .notNull()
     .references(() => posts.id),
