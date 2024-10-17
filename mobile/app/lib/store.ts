@@ -1,9 +1,9 @@
 import { observable } from "@legendapp/state";
-import { syncedCrud } from "@legendapp/state/sync-plugins/crud";
-import { api, RouterOutputs } from "./trpc";
-import { configureSynced } from "@legendapp/state/sync";
 import { observablePersistAsyncStorage } from "@legendapp/state/persist-plugins/async-storage";
+import { configureSynced } from "@legendapp/state/sync";
+import { syncedCrud } from "@legendapp/state/sync-plugins/crud";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { api, RouterOutputs } from "./trpc";
 
 const synced = configureSynced(syncedCrud, {
   persist: {
@@ -30,6 +30,19 @@ export const store$ = observable({
     initial: [] as RouterOutputs["posts"]["list"],
     list: async ({ lastSync }) => await api.posts.list.query({ lastSync }),
     create: async (input) => await api.posts.create.mutate(input),
+    update: async (input) => await api.posts.update.mutate(input),
+    onSaved: ({ saved }) => {
+      const post = store$.posts
+        .filter((post) => saved.id === post.id.get())[0]
+        .get();
+      post.updatedAt = saved.updatedAt;
+      post.createdAt = saved.createdAt;
+    },
+    changesSince: "last-sync",
+    fieldUpdatedAt: "updatedAt",
+    fieldCreatedAt: "createdAt",
+    fieldId: "id",
+    mode: "merge",
     persist: {
       name: "posts",
     },
@@ -38,6 +51,15 @@ export const store$ = observable({
     as: "array",
     initial: [] as RouterOutputs["comments"]["list"],
     list: async ({ lastSync }) => await api.comments.list.query({ lastSync }),
+    create: async (input) => await api.comments.create.mutate(input),
+    update: async (input) => await api.comments.update.mutate(input),
+    onSaved: ({ saved }) => {
+      const comment = store$.comments
+        .filter((comment) => saved.id === comment.id.get())[0]
+        .get();
+      comment.updatedAt = saved.updatedAt;
+      comment.createdAt = saved.createdAt;
+    },
     persist: {
       name: "comments",
     },
