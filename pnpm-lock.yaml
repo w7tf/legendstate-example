@@ -17,8 +17,8 @@ importers:
         specifier: ^14.0.2
         version: 14.0.4
       '@legendapp/state':
-        specifier: 3.0.0-beta.9
-        version: 3.0.0-beta.9(react@18.2.0)
+        specifier: 3.0.0-beta.12
+        version: 3.0.0-beta.12(react@18.2.0)
       '@react-native-async-storage/async-storage':
         specifier: ^2.0.0
         version: 2.0.0(react-native@0.74.5(@babel/core@7.25.8)(@babel/preset-env@7.25.8(@babel/core@7.25.8))(@types/react@18.2.79)(react@18.2.0))
@@ -1550,8 +1550,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@legendapp/state@3.0.0-beta.9':
-    resolution: {integrity: sha512-Hh9uZfQhnsr6rKB+qFZE7H1KrCcgORCWBsZ8Jsw+MgjXrz1oWdwufbMJsCYUs+Ay/9536CEOnenlUbQPXQbISw==}
+  '@legendapp/state@3.0.0-beta.12':
+    resolution: {integrity: sha512-uj8shlniOUIRlhyJmuy2t7v5op8f+ZmpUHtMIJv9k7HH8Cc0KtY1qZAuzXqH8yPp23swKnCLKMoYO+kwQtrpCg==}
 
   '@libsql/client@0.14.0':
     resolution: {integrity: sha512-/9HEKfn6fwXB5aTEEoMeFh4CtG0ZzbncBb1e++OCdVpgKZ/xyMsIVYXm0w7Pv4RUel803vE6LwniB3PqD72R0Q==}
@@ -7299,7 +7299,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@legendapp/state@3.0.0-beta.9(react@18.2.0)':
+  '@legendapp/state@3.0.0-beta.12(react@18.2.0)':
     dependencies:
       use-sync-external-store: 1.2.2(react@18.2.0)
     transitivePeerDependencies:
