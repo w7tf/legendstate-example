@@ -13,7 +13,7 @@ function Comments() {
     author: "",
   });
 
-  const handleCreatePost = () => {
+  const handleCommentUpdate = () => {
     store$.comments.push({
       postId: postId,
       author: data.author.get(),
@@ -43,7 +43,7 @@ function Comments() {
         style={styles.input}
         placeholder="Author"
       />
-      <Button title="Create Comment" onPress={() => handleCreatePost()} />
+      <Button title="Create Comment" onPress={() => handleCommentUpdate()} />
     </View>
   );
 }
