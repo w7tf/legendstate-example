@@ -9,20 +9,16 @@ function Comments() {
   }>();
 
   const router = useRouter();
-  //   const comment = store$.comments.get().find((c) => c.id == commentId); // WORKS
-  const comment = store$.comments.find((c) => c.id.get() == commentId); // Does not work
-
-  console.log(commentId);
-  console.log(comment, "COMMENT");
+  const comment = store$.comments[commentId];
 
   const data = useObservable({
-    comment: comment?.content,
-    author: comment?.author,
+    comment: comment.get().content,
+    author: comment.get().author,
   });
 
   const handleCommentUpdate = () => {
-    comment?.content.set(data.comment.get());
-    comment?.author.set(data.author.get());
+    comment.content.set(data.comment.get());
+    comment.author.set(data.author.get());
     router.back();
   };
 
@@ -37,11 +33,13 @@ function Comments() {
       <TextInput
         onChangeText={(t) => data.comment.set(t)}
         style={styles.input}
+        value={data.comment.get()}
         placeholder="Comment"
       />
       <TextInput
         onChangeText={(t) => data.author.set(t)}
         style={styles.input}
+        value={data.author.get()}
         placeholder="Author"
       />
       <Button title="Update comment" onPress={() => handleCommentUpdate()} />

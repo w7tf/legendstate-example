@@ -1,20 +1,18 @@
+import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { ThemedText } from "@/components/ThemedText";
 import { observer } from "@legendapp/state/react";
 import { Link, Stack, useLocalSearchParams } from "expo-router";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { store$ } from "../lib/store";
-import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 
 function Posts() {
   const { postId } = useLocalSearchParams<{ postId: string }>();
 
-  const post = store$.posts
-    .get()
-    .filter((post) => post.id.toString() === postId)[0];
+  const post = store$.posts[postId].get();
 
-  const comments = store$.comments
-    .get()
-    .filter((comment) => comment.postId === post.id);
+  const comments = Object.values(store$.comments.get()).filter(
+    (c) => c.postId === postId
+  );
 
   return (
     <ScrollView style={styles.container}>

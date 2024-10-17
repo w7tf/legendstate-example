@@ -14,15 +14,17 @@ function Comments() {
   });
 
   const handleCommentUpdate = () => {
-    store$.comments.push({
+    const id = randomUUID();
+
+    store$.comments[id].set({
       postId: postId,
       author: data.author.get(),
       content: data.comment.get(),
-      id: randomUUID(),
+      id,
       createdAt: null, // this will be updated by the server
       updatedAt: null, // this will be updated by the server
     });
-    router.back()
+    router.back();
   };
 
   return (

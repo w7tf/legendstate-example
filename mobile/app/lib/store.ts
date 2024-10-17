@@ -4,8 +4,12 @@ import { configureSynced } from "@legendapp/state/sync";
 import { syncedCrud } from "@legendapp/state/sync-plugins/crud";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { api, RouterOutputs } from "./trpc";
+import { randomUUID } from "expo-crypto";
 
 const synced = configureSynced(syncedCrud, {
+  fieldUpdatedAt: "updatedAt",
+  fieldCreatedAt: "createdAt",
+  fieldId: "id",
   persist: {
     plugin: observablePersistAsyncStorage({
       AsyncStorage,
@@ -26,40 +30,29 @@ export const store$ = observable({
     },
   }),
   posts: synced({
-    as: "array",
-    initial: [] as RouterOutputs["posts"]["list"],
+    as: "object",
+    initial: {} as Record<string, RouterOutputs["posts"]["list"][0]>,
     list: async ({ lastSync }) => await api.posts.list.query({ lastSync }),
-    create: async (input) => await api.posts.create.mutate(input),
-    update: async (input) => await api.posts.update.mutate(input),
-    onSaved: ({ saved }) => {
-      const post = store$.posts
-        .filter((post) => saved.id === post.id.get())[0]
-        .get();
-      post.updatedAt = saved.updatedAt;
-      post.createdAt = saved.createdAt;
+    create: async (input) => {
+      return await api.posts.create.mutate(input);
     },
+    update: async (input) => await api.posts.update.mutate(input),
     changesSince: "last-sync",
-    fieldUpdatedAt: "updatedAt",
-    fieldCreatedAt: "createdAt",
-    fieldId: "id",
     mode: "merge",
     persist: {
       name: "posts",
     },
   }),
   comments: synced({
-    as: "array",
-    initial: [] as RouterOutputs["comments"]["list"],
+    as: "object",
+    initial: {} as Record<string, RouterOutputs["comments"]["list"][0]>,
     list: async ({ lastSync }) => await api.comments.list.query({ lastSync }),
-    create: async (input) => await api.comments.create.mutate(input),
-    update: async (input) => await api.comments.update.mutate(input),
-    onSaved: ({ saved }) => {
-      const comment = store$.comments
-        .filter((comment) => saved.id === comment.id.get())[0]
-        .get();
-      comment.updatedAt = saved.updatedAt;
-      comment.createdAt = saved.createdAt;
+    create: async (input) => {
+      return await api.comments.create.mutate(input);
     },
+    update: async (input) => await api.comments.update.mutate(input),
+    generateId: () => randomUUID(),
+    changesSince: "last-sync",
     persist: {
       name: "comments",
     },

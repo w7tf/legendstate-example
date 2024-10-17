@@ -13,11 +13,13 @@ function createPost() {
   });
 
   const handleCreatePost = () => {
-    store$.posts.push({
+    const id = randomUUID();
+
+    store$.posts[id].set({
+      id,
       author: data.author.get(),
       content: data.content.get(),
       title: data.title.get(),
-      id: randomUUID(),
       createdAt: null, // this will be updated by the server
       updatedAt: null, // this will be updated by the server
     });
