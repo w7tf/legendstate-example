@@ -12,8 +12,8 @@ function TabThreeScreen() {
     <ThemedView style={styles.container}>
       <For each={posts}>
         {(post) => (
-          <Link href={`/posts/${post.id.get().toString()}`}>
-            <ThemedText key={post.id.get().toString()}>
+          <Link href={`/posts/${post.id.get()}`}>
+            <ThemedText key={post.id.get()}>
               {post.title.get()}
             </ThemedText>
           </Link>
