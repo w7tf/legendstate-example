@@ -1,7 +1,7 @@
 import { eq, gt } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "../db/client";
-import { posts } from "../db/schema";
+import { comments, posts } from "../db/schema";
 import { publicProcedure, router } from "../trpc";
 
 export const postRouter = router({
@@ -35,9 +35,37 @@ export const postRouter = router({
         content: z.string(),
         author: z.string(),
         id: z.string(),
+        isDeleted: z.boolean().optional(),
       })
     )
     .mutation(async ({ input }) => {
-      await db.update(posts).set(input).where(eq(posts.id, input.id));
+      if (!input.isDeleted) {
+        await db.update(posts).set(input).where(eq(posts.id, input.id));
+      }
+
+      if (input.isDeleted) {
+        await db.transaction(
+          async (tx) => {
+            await tx
+              .update(posts)
+              .set({
+                author: "",
+                content: "",
+                isDeleted: true,
+              })
+              .where(eq(posts.id, input.id));
+
+            await tx
+              .update(comments)
+              .set({
+                author: "",
+                content: "",
+                isDeleted: true,
+              })
+              .where(eq(comments.postId, input.id));
+          },
+          { behavior: "immediate" }
+        );
+      }
     }),
 });

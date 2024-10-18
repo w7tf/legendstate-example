@@ -22,6 +22,7 @@ function createPost() {
       title: data.title.get(),
       createdAt: null, // this will be updated by the server
       updatedAt: null, // this will be updated by the server
+      isDeleted: false,
     });
     router.push("/posts");
   };

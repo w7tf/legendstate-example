@@ -38,6 +38,7 @@ export const store$ = observable({
     },
     update: async (input) => await api.posts.update.mutate(input),
     changesSince: "last-sync",
+    fieldDeleted: "isDeleted",
     mode: "merge",
     persist: {
       name: "posts",

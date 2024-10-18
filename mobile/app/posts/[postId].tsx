@@ -21,7 +21,11 @@ function HeaderRight({ postId }: { postId: string }) {
         if (index === 0) {
           router.push(`/posts/update/${postId}`);
         } else if (index === 1) {
-          store$.posts[postId].delete();
+          store$.posts[postId].assign({
+            isDeleted: true,
+          });
+
+          // store$.posts[postId].delete();
           router.push("/posts");
         }
       }
