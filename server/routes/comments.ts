@@ -25,8 +25,7 @@ export const commentsRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      const values = { ...input, createdAt: undefined, updatedAt: undefined };
-      const data = await db.insert(comments).values(values).returning();
+      const data = await db.insert(comments).values(input).returning();
       return data[0];
     }),
   update: publicProcedure
@@ -39,11 +38,10 @@ export const commentsRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      const values = { ...input, createdAt: undefined, updatedAt: undefined };
       const data = await db
         .update(comments)
-        .set(values)
-        .where(eq(comments.id, values.id))
+        .set(input)
+        .where(eq(comments.id, input.id))
         .returning();
       return data[0];
     }),

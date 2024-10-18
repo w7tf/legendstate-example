@@ -25,8 +25,7 @@ export const postRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      const values = { ...input, createdAt: undefined, updatedAt: undefined };
-      const data = await db.insert(posts).values(values).returning();
+      const data = await db.insert(posts).values(input).returning();
       return data[0];
     }),
   update: publicProcedure
@@ -39,7 +38,6 @@ export const postRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      const values = { ...input, createdAt: undefined, updatedAt: undefined };
-      await db.update(posts).set(values).where(eq(posts.id, input.id));
+      await db.update(posts).set(input).where(eq(posts.id, input.id));
     }),
 });
