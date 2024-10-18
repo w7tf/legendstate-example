@@ -1,9 +1,35 @@
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { ThemedText } from "@/components/ThemedText";
 import { observer } from "@legendapp/state/react";
-import { Link, Stack, useLocalSearchParams } from "expo-router";
+import { Link, Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { store$ } from "../lib/store";
+import { useActionSheet } from "@expo/react-native-action-sheet";
+
+function HeaderRight({ postId }: { postId: string }) {
+  const { showActionSheetWithOptions } = useActionSheet();
+  const router = useRouter();
+
+  const onPress = () => {
+    showActionSheetWithOptions(
+      {
+        options: ["Edit", "Delete", "Cancel"],
+        cancelButtonIndex: 2,
+        destructiveButtonIndex: 1,
+      },
+      (index) => {
+        if (index === 0) {
+          router.push(`/posts/update/${postId}`);
+        } else if (index === 1) {
+          store$.posts[postId].delete();
+          router.push("/posts");
+        }
+      }
+    );
+  };
+
+  return <TabBarIcon name={"ellipsis-vertical-outline"} onPress={onPress} />;
+}
 
 function Posts() {
   const { postId } = useLocalSearchParams<{ postId: string }>();
@@ -19,6 +45,7 @@ function Posts() {
       <Stack.Screen
         options={{
           title: `Post ${post.id}`,
+          headerRight: () => <HeaderRight postId={postId} />,
         }}
       />
       <View style={styles.separator}>

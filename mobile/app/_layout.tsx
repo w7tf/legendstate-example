@@ -11,6 +11,7 @@ import "react-native-reanimated";
 import { useAsyncStorageDevTools } from "@dev-plugins/async-storage";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -34,13 +35,15 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen
-          name="(tabs)"
-          options={{ headerShown: false, title: "Posts" }}
-        />
-        <Stack.Screen name="+not-found" />
-      </Stack>
+      <ActionSheetProvider>
+        <Stack>
+          <Stack.Screen
+            name="(tabs)"
+            options={{ headerShown: false, title: "Posts" }}
+          />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+      </ActionSheetProvider>
     </ThemeProvider>
   );
 }
