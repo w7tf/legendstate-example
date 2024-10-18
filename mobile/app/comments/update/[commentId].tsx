@@ -9,16 +9,19 @@ function Comments() {
   }>();
 
   const router = useRouter();
-  const comment = store$.comments[commentId];
+  const comment$ = store$.comments[commentId];
 
-  const data = useObservable({
-    comment: comment.get().content,
-    author: comment.get().author,
+  const data$ = useObservable({
+    comment: comment$.get().content,
+    author: comment$.get().author,
   });
 
   const handleCommentUpdate = () => {
-    comment.content.set(data.comment.get());
-    comment.author.set(data.author.get());
+    comment$.assign({
+      content: data$.comment.get(),
+      author: data$.author.get(),
+    });
+
     router.back();
   };
 
@@ -31,15 +34,15 @@ function Comments() {
         }}
       />
       <TextInput
-        onChangeText={(t) => data.comment.set(t)}
+        onChangeText={(t) => data$.comment.set(t)}
         style={styles.input}
-        value={data.comment.get()}
+        value={data$.comment.get()}
         placeholder="Comment"
       />
       <TextInput
-        onChangeText={(t) => data.author.set(t)}
+        onChangeText={(t) => data$.author.set(t)}
         style={styles.input}
-        value={data.author.get()}
+        value={data$.author.get()}
         placeholder="Author"
       />
       <Button title="Update comment" onPress={() => handleCommentUpdate()} />
