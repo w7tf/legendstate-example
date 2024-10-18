@@ -23,7 +23,7 @@ function createPost() {
       createdAt: null, // this will be updated by the server
       updatedAt: null, // this will be updated by the server
     });
-    router.push("/tutorial");
+    router.push("/posts");
   };
 
   return (
