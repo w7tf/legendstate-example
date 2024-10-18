@@ -31,7 +31,7 @@ export const store$ = observable({
   }),
   posts: synced({
     as: "object",
-    initial: {} as Record<string, RouterOutputs["posts"]["list"][0]>,
+    initial: {} as Record<string, RouterOutputs["posts"]["list"][number]>,
     list: async ({ lastSync }) => await api.posts.list.query({ lastSync }),
     create: async (input) => {
       return await api.posts.create.mutate(input);
@@ -45,7 +45,7 @@ export const store$ = observable({
   }),
   comments: synced({
     as: "object",
-    initial: {} as Record<string, RouterOutputs["comments"]["list"][0]>,
+    initial: {} as Record<string, RouterOutputs["comments"]["list"][number]>,
     list: async ({ lastSync }) => await api.comments.list.query({ lastSync }),
     create: async (input) => {
       return await api.comments.create.mutate(input);
@@ -53,6 +53,7 @@ export const store$ = observable({
     update: async (input) => await api.comments.update.mutate(input),
     generateId: () => randomUUID(),
     changesSince: "last-sync",
+    mode: "merge",
     persist: {
       name: "comments",
     },
